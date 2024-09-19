@@ -1,27 +1,42 @@
 # YouTube Data Engineering and Analysis with AWS
 
 ## Overview
-This project focuses on efficiently managing and analyzing structured and semi-structured YouTube video data, categorized by video types and trending metrics, while ensuring secure processing.
+This project focuses on efficiently managing and analyzing structured and semi-structured YouTube video data. It employs AWS services to build an end-to-end pipeline for data processing, transformation, and analysis, enabling real-time insights using a serverless architecture.
 
 ## Project Objectives
-- **Data Ingestion**: Implement a system to collect data from multiple sources.
-- **ETL Process**: Transform raw data into a refined, usable format.
-- **Data Lake**: Establish a centralized repository to store data from various sources.
-- **Scalability**: Ensure the system can handle growing data volumes as they increase over time.
-- **Cloud Integration**: Leverage AWS cloud services to process large datasets beyond local machine capacity.
-- **Reporting**: Develop dashboards to address the key questions and insights derived from the analysis.
+- **Data Ingestion**: Collect data from Kaggle and upload it to Amazon S3.
+- **ETL Process**: Use AWS Glue to build a Data Catalog and automate data transformations with AWS Lambda.
+- **Data Lake**: Store raw, cleaned, and transformed data in different S3 buckets.
+- **Scalability**: Ensure the system scales efficiently with growing datasets.
+- **Cloud Integration**: Leverage AWS services for data processing, transformation, and visualization.
+- **Reporting**: Visualize data and trends with Amazon QuickSight dashboards.
 
-## Services We Will Be Using
-- **Amazon S3**: An object storage service offering unmatched scalability, data availability, security, and performance for storing and retrieving any amount of data.
-- **AWS IAM**: Identity and Access Management (IAM) enables secure access control for AWS services and resources, ensuring proper permissions and security protocols.
-- **Amazon QuickSight**: A cloud-native business intelligence (BI) service that offers powerful, serverless, and scalable analytics with embedded machine learning capabilities.
-- **AWS Glue**: A serverless data integration tool that simplifies discovering, preparing, and merging data for analytics, machine learning, and app development.
-- **AWS Lambda**: A compute service that allows you to execute code in response to events without provisioning or managing servers.
-- **AWS Athena**: An interactive query service that enables users to analyze data directly in S3 using SQL without the need for data loading or managing databases.
+## AWS Services Used
+- **Amazon S3**: Primary storage for raw and cleaned datasets, and query results from AWS Athena.
+- **AWS CLI**: Uploaded datasets from local storage to S3, simplifying interaction with AWS services.
+- **AWS Glue Crawler**: Scanned datasets, created a Data Catalog, and stored schema information in a new database.
+- **AWS Lambda**: Converted JSON and CSV files to Parquet format, performed basic data cleaning, and triggered automation on changes in S3.
+- **AWS Athena**: Queried the data stored in S3 for efficient analysis without loading it into a database.
+- **AWS Glue Studio**: Built an ETL pipeline to transform the data and store it in the analytical S3 bucket.
+- **Amazon QuickSight**: Connected to Athena for data visualization and analysis through interactive dashboards.
 
-## Dataset Used
-This project utilizes a dataset from Kaggle that provides daily statistics on popular YouTube videos over several months. It includes data for up to 200 trending videos per day across different regions. Each region’s data is stored in separate files, containing information such as video title, channel title, publication date, tags, views, likes, dislikes, descriptions, and comment count. The dataset also includes a `category_id` field, unique to each region, linked to a corresponding JSON file.
-https://www.kaggle.com/datasets/datasnaek/youtube-new
+## Project Flow
+1. **Data Upload**: Downloaded the YouTube dataset from Kaggle and uploaded it to an Amazon S3 bucket using AWS CLI.
+2. **Data Crawling**: Used AWS Glue Crawler to crawl the raw data (CSV & JSON), creating a Data Catalog in a new database.
+3. **Data Cleaning**: Used AWS Lambda to convert files into Parquet format for efficient storage, with basic data cleaning.
+4. **Querying**: Ensured data was ready for querying using AWS Athena, and created a new S3 bucket to store query results.
+5. **Trigger Setup**: Built a trigger to automatically execute the Lambda function when updates or deletions occurred in S3.
+6. **ETL Pipeline**: Used AWS Glue Studio to create an ETL pipeline, transforming the cleaned data and storing it in the final analytical bucket.
+7. **Data Visualization**: Connected QuickSight to Athena and built an interactive dashboard to visualize the data.
 
-## Architecture Diagram
-![architecture](https://github.com/user-attachments/assets/d435f426-7c0a-46ff-9cd2-029bf2d9b09d)
+## Dataset Used: https://www.kaggle.com/datasets/datasnaek/youtube-new
+
+## Architecture Diagram:
+![architecture](https://github.com/user-attachments/assets/c2a37e6a-6145-463b-b516-28e811d61e56)
+
+## AWS QuickSight Dashboard:
+![Youtube_Quicksight](https://github.com/user-attachments/assets/17b0d3ff-a0df-46c9-9259-9a7d7c3146bb)
+
+
+
+
